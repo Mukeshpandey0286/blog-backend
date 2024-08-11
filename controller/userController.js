@@ -15,6 +15,13 @@ const signUp = async (req, res) => {
          return res.status(401).json({ error: 'User already exists' });
      }
 
+     // Check if a user with the given email or username already exists
+        const existingUser = await User.findOne({ email: email });
+        
+        if (existingUser) {
+            return res.status(401).json({ msg: 'User already exists' });
+        }
+
     await User.create({
       name,
       email,
@@ -34,6 +41,8 @@ const signIn = async (req, res) => {
     const user = await User.findOne({ email });
   if(!user) res.status(201).json({msg: "user is not found!!"})
 
+    const user = await this.findOne({ email });
+  if (!user) return res.status(404).json({msg: "User not exist!!"});
 
     const token = await User.matchPasswordAndGenerateToken(user, password);
 
