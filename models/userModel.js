@@ -46,7 +46,7 @@ userSchema.pre("save", function (next) {
 });
 
 // mongoose virtual functions
-userSchema.static("matchPasswordAndGenerateToken", async function (email, password) {
+userSchema.statics("matchPasswordAndGenerateToken", async function (email, password) {
   const user = await this.findOne({ email });
   if (!user) throw new Error("User not found");
 
