@@ -31,6 +31,8 @@ const signUp = async (req, res) => {
 const signIn = async (req, res) => {
   const { email, password } = req.body;
   try {
+    const user = await this.findOne({ email });
+  if (!user) return res.status(404).json({msg: "User not exist!!"});
 
     const token = await User.matchPasswordAndGenerateToken(email, password);
 
