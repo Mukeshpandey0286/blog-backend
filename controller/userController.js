@@ -32,7 +32,7 @@ const signIn = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-  if(!user) res.status(201).json({msg: "user is not found!!"})
+  if(!user) res.status(401).json({msg: "user is not found!!"})
 
     const token = await User.matchPasswordAndGenerateToken(user, password);
 
