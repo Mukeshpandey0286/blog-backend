@@ -46,9 +46,7 @@ userSchema.pre("save", function (next) {
 });
 
 // mongoose virtual functions
-userSchema.static("matchPasswordAndGenerateToken", async function (email, password) {
-  const user = await this.findOne({ email });
-  if (!user) throw new Error("User not found");
+userSchema.statics.matchPasswordAndGenerateToken = async function (user, password) {
 
   const hashedPassword = createHmac("sha256", user.salt)
     .update(password)
@@ -62,6 +60,6 @@ userSchema.static("matchPasswordAndGenerateToken", async function (email, passwo
   const token = createTokenForUser(user);
   
   return token;
-});
+};
 
 module.exports = mongoose.model("blogUsers", userSchema);

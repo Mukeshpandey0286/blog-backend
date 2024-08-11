@@ -17,7 +17,7 @@ const createTokenForUser = (user) => {
         throw new Error("JWT_SECRET is not defined in the environment variables");
       }
 
-    const token = jwt.sign(payload, secretKey);
+    const token =  jwt.sign(payload, secretKey);
     return token;
 }
 
