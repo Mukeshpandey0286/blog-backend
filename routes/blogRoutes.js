@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/", checkForAuthentication, allBlogs);
 
-router.get("/:id", checkForAuthentication, viewMoreAboutBlog);
+router.get("/:id", viewMoreAboutBlog);
 
 router.post("/add-new", checkForAuthentication, restrictToUser(["USER", "ADMIN"]), addBlogs);
 
