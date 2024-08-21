@@ -58,7 +58,7 @@ const viewMoreAboutBlog = async (req, res) => {
         }
 
         // Return the blog with a 200 status code
-        return res.status(200).json({ msg: "Blog is successfully fetched!", blog });
+        return res.status(200).json( blog );
     
     } catch (err) {
         // Log the error and return a 500 status code
