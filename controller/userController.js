@@ -45,11 +45,6 @@ const signIn = async (req, res) => {
 
 const getProfile = async(req, res) => {
 try {
-  if (!req.user) {
-    return res.status(401).json({ msg: "Unauthorized" });
-  }
-
-  // Extract user ID from the authenticated user object
   const userId = req.user._id;
 
   // Fetch user profile from the database
@@ -69,12 +64,6 @@ try {
 
 const updateProfile = async(req, res) => {
 try {
-  // Ensure the user is authenticated
-  if (!req.user) {
-    return res.status(401).json({ msg: "Unauthorized" });
-  }
-
-  // Extract user ID from the authenticated user object
   const userId = req.user._id;
 
   // Extract fields to update from request body
