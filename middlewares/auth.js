@@ -5,8 +5,8 @@ const checkForAuthentication = async (req, res, next) => {
     req.user = null;
 
     if (!authorizationHeaderValue || !authorizationHeaderValue.startsWith("Bearer ")) {
-        return next();
-        // res.status(403).json("Bad request! Without token you can't do further action.")
+        // return next();
+        res.status(403).json("Bad request! Without token you can't do further action.")
     }
 
     const token = authorizationHeaderValue.split("Bearer ")[1];
