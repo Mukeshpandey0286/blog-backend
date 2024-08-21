@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const allBlogs = async(req, res) => {
     try {
         const blog = await Blog.find({}).sort({ createdBy: -1 });
-        return res.status(200).json({ msg: "All blogs fetched!", blog });
+        return res.status(200).json(blog);
    
     } catch (err) {
         res.status(500).json("Internal sever error!");
