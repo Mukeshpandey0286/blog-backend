@@ -11,12 +11,14 @@ const checkForAuthentication = async (req, res, next) => {
 
     const token = authorizationHeaderValue.split("Bearer ")[1];
     const user = verifyToken(token);
-
-    if (user) {
-        req.user = user;
-    }
-
-    return next();
+    
+ if (user) {
+    req.user = user;
+    return next(); 
+     
+  } else {
+    return res.status(401).json({ msg: "Unauthorized" });
+  }
 };
 
 const restrictToUser = (roles = []) => {
