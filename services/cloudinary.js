@@ -10,7 +10,7 @@ const uploadOnCloudnary = async (localFilePath) => {
       folder: "blogs",
       resource_type: "auto",
     });
-    console.log("File Uploaded on cloudinary: ", result.url);
+    //console.log("File Uploaded on cloudinary: ", result.url);
 
     return result;
   } catch (error) {
