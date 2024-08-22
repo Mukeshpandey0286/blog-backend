@@ -1,5 +1,6 @@
 const Blog = require("../models/blogModel");
 const mongoose = require('mongoose');
+const {uploadOnCloudnary} = require('../services/cloudinary');
 
 const allBlogs = async(req, res) => {
     try {
@@ -16,19 +17,18 @@ const allBlogs = async(req, res) => {
 
 const addBlogs = async(req, res) => {
 try {
-    const {title, body,} = req.body;
+    const {title, body, coverImage } = req.body;
+    const myCloud = await uploadOnCloudnary(req.body.coverImage);
+
 
     if(!title || !body ) 
         res.status(403).json("ALL FEILDS ARE REQUIRED!");
 
-    if (!req.user || !req.user._id) {
-        return res.status(401).json("User not authenticated!");
-    }
-
     const blog = await Blog.create({
         title,
         body,
-        createdBy: req.user._id
+        createdBy: req.user._id,
+        coverImage:myCloud.secure_url,
     })
 
     console.log(`Blog created: ${JSON.stringify(blog)}`);  // Debugging statement
