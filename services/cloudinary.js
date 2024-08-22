@@ -1,4 +1,4 @@
-const {v2} = require("cloudinary");
+const { v2: cloudinary } = require("cloudinary");
 
 const uploadOnCloudnary = async (localFilePath) => {
   try {
@@ -10,12 +10,13 @@ const uploadOnCloudnary = async (localFilePath) => {
       folder: "blogs",
       resource_type: "auto",
     });
-    console.log("File Uploaded on cloudiinary : ", result.url);
+    console.log("File Uploaded on cloudinary: ", result.url);
 
     return result;
   } catch (error) {
+    console.error("Error uploading to Cloudinary: ", error);
     return null;
   }
 };
 
-exports.module =  { uploadOnCloudnary };
+module.exports = { uploadOnCloudnary };
