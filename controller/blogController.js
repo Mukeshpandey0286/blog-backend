@@ -33,7 +33,7 @@ try {
 
     console.log(`Blog created: ${JSON.stringify(blog)}`);  // Debugging statement
 
-    return res.status(201).json({ msg: "Blog is created successfully!!", blog});
+    return res.status(201).json( blog);
    
 } catch (err) {
     res.status(500).json("Internal sever error!");
