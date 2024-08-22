@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
+const cloudinary =require("cloudinary");
 
 const userRoutes = require("./routes/userRoute");
 const blogRoutes = require("./routes/blogRoutes");
@@ -18,6 +19,14 @@ const url = `mongodb+srv://${db_username}:${db_password}@testcluster.mfbdxax.mon
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(errorMiddleware);
+
+// Cloudinary Config
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const connection = async () => {
   try {
