@@ -23,9 +23,9 @@ try {
             res.status(403).json("ALL FEILDS ARE REQUIRED!");
 
     const myCloud = await uploadOnCloudnary(coverImage);
-  if (!myCloud || !myCloud.secure_url) {
-            return res.status(500).json("Image upload failed or 'secure_url' is missing.");
-        }
+  // if (!myCloud || !myCloud.secure_url) {
+  //           return res.status(500).json("Image upload failed or 'secure_url' is missing.");
+  //       }
 
     const blog = await Blog.create({
         title,
