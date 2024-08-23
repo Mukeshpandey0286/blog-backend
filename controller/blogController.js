@@ -20,7 +20,7 @@ try {
     const {title, body, coverImage } = req.body;
     
         if(!title || !body ) 
-            res.status(403).json("ALL FEILDS ARE REQUIRED!");
+           return res.status(403).json("ALL FEILDS ARE REQUIRED!");
 
     const myCloud = await uploadOnCloudnary(coverImage);
   // if (!myCloud || !myCloud.secure_url) {
