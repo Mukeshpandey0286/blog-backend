@@ -8,6 +8,6 @@ router.get("/", checkForAuthentication, allBlogs);
 
 router.get("/:id", viewMoreAboutBlog);
 
-router.post("/add-new", checkForAuthentication, restrictToUser(["USER", "ADMIN"]), addBlogs);
+router.post("/add-new", checkForAuthentication, addBlogs);
 
 module.exports = router;
