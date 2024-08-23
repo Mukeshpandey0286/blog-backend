@@ -34,7 +34,7 @@ try {
         coverImage:myCloud.secure_url,
     })
 
-    // console.log(`Blog created: ${JSON.stringify(blog)}`);  
+    console.log(`Blog created: ${JSON.stringify(blog)}`);  
 
     return res.status(201).json( blog);
    
