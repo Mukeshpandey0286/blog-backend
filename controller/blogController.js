@@ -15,35 +15,49 @@ const allBlogs = async(req, res) => {
 }
 
 
-const addBlogs = async(req, res) => {
-try {
-    const {title, body, coverImage } = req.body;
-    
-        if(!title || !body ) 
-           return res.status(403).json("ALL FEILDS ARE REQUIRED!");
+const addBlogs = async (req, res) => {
+    try {
+        const { title, body } = req.body; // Use req.body to get form fields
+        const coverImage = req.file; // Use req.file or req.files for file uploads
 
-    const myCloud = await uploadOnCloudnary(coverImage);
-  // if (!myCloud || !myCloud.secure_url) {
-  //           return res.status(500).json("Image upload failed or 'secure_url' is missing.");
-  //       }
+        // Validate required fields
+        if (!title || !body) {
+            return res.status(403).json("ALL FIELDS ARE REQUIRED!");
+        }
 
-    const blog = await Blog.create({
-        title,
-        body,
-        createdBy: req.user._id,
-        coverImage:myCloud.secure_url,
-    })
+        // Upload the image if it exists
+        let coverImageUrl = '';
+        if (coverImage) {
+            const myCloud = await uploadOnCloudnary(coverImage.path);
+            if (myCloud && myCloud.secure_url) {
+                coverImageUrl = myCloud.secure_url;
+            } else {
+                return res.status(500).json("Image upload failed.");
+            }
+        }
 
-    console.log(`Blog created: ${JSON.stringify(blog)}`);  
+        // Create the blog in the database
+        const blog = await Blog.create({
+            title,
+            body,
+            createdBy: req.user._id,
+            coverImage: coverImageUrl || undefined,
+        });
 
-    return res.status(201).json( blog);
-   
-} catch (err) {
-    res.status(500).json("Internal sever error!");
-        console.log(err);
-        
-}
-}
+        // console.log(`Blog created: ${JSON.stringify(blog)}`);  // Debugging statement
+
+        return res.status(201).json(blog);
+
+    } catch (err) {
+        // console.log(err); // Log the error for debugging
+
+        // Check if response has already been sent
+        if (!res.headersSent) {
+            return res.status(500).json("Internal server error!");
+        }
+    }
+};
+
 
 const viewMoreAboutBlog = async (req, res) => {
     try {
@@ -55,14 +69,17 @@ const viewMoreAboutBlog = async (req, res) => {
         // Find the blog by ID
         const blog = await Blog.findById(req.params.id);
 
+        // If the blog is not found, return a 404 status code
         if (!blog) {
             return res.status(404).json("Blog not found!");
         }
 
+        // Return the blog with a 200 status code
         return res.status(200).json( blog );
     
     } catch (err) {
-        console.error("Error in viewMoreAboutBlog:", err.message);
+        // Log the error and return a 500 status code
+        // console.error("Error in viewMoreAboutBlog:", err.message);
         return res.status(500).json("Internal server error!");
     }
 }
